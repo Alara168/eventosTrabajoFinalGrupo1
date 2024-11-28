@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Escuela STEAM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#eventos">Eventos</a></li>
+                <li><a href="#horario">Horario</a></li>
+                <li><a href="#login">Iniciar Sesión</a></li>
+                <li><a href="#registro">Registrarse</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="proximos-eventos">
+            <h2>Próximos Eventos</h2>
+            <div class="eventos-navegacion">
+                <button id="boton-anterior" class="boton-navegacion">←</button>
+                <div id="eventos-container"></div>
+                <button id="boton-siguiente" class="boton-navegacion">→</button>
+            </div>
+        </section>
+
+        <section id="horario-semanal">
+            <h2>Horario Semanal</h2>
+            <table id="horario-table"></table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Escuela STEAM. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
