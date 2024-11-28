@@ -167,3 +167,34 @@ document.addEventListener('DOMContentLoaded', function () {
         horarioTable.innerHTML += row;
     });
 });
+
+// Código existente
+
+// Funciones para login y registro
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('login');
+    const registerForm = document.getElementById('register');
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            // Aquí iría la lógica de autenticación
+            console.log('Intento de inicio de sesión:', username);
+        });
+    }
+
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const userType = document.getElementById('user-type').value;
+            const verificationCode = document.getElementById('verification-code').value;
+            // Aquí iría la lógica de registro
+            console.log('Intento de registro:', { username, email, userType, verificationCode });
+        });
+    }
+});
