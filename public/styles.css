@@ -146,6 +146,19 @@ footer {
 background-color:#CC0000 ;
 }
 
+#calendar {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+#event-details img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+
 /* Media Queries para Responsividad */
 
 @media (max-width: 768px) { 
