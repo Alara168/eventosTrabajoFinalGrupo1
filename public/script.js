@@ -2,33 +2,42 @@ document.addEventListener('DOMContentLoaded', function () {
     const eventos = [
         {
             titulo: 'Taller de Robótica',
-            fecha: '2024-12-12',
-            hora: '15:00',
-            categoria: 'Estudiantes',
+            imagen: 'images/taller_robotica.jpg',
+            fecha: '2024-12-01',
+            horaInicio: '15:00',
+            horaFin: '17:00',
+            descripcion: 'Taller práctico de introducción a la robótica',
+            publicoObjetivo: 'Estudiantes',
             lugar: 'Laboratorio de Robótica',
             organizador: 'Departamento de Ingeniería',
-            descripcion: 'Taller práctico de introducción a la robótica',
-            registro: 'https://registro-taller-robotica.com'
+            registro: 'https://registro-taller-robotica.com',
+            estado: 'Proximamente'
         },
         {
             titulo: 'Conferencia IA',
+            imagen: 'images/conferencia_ia.jpg',
             fecha: '2024-12-03',
-            hora: '18:00',
-            categoria: 'Comunidad Universitaria',
+            horaInicio: '18:00',
+            horaFin: '20:00',
+            descripcion: 'Charla sobre los últimos avances en Inteligencia Artificial',
+            publicoObjetivo: 'Comunidad Universitaria',
             lugar: 'Auditorio Principal',
             organizador: 'Facultad de Informática',
-            descripcion: 'Charla sobre los últimos avances en Inteligencia Artificial',
-            registro: 'https://registro-conferencia-ia.com'
+            registro: 'https://registro-conferencia-ia.com',
+            estado: 'Finalizado'
         },
         {
             titulo: 'Hackathon STEAM',
+            imagen: 'images/hackathon.jpg',
             fecha: '2024-12-05',
-            hora: '09:00',
-            categoria: 'Estudiantes',
+            horaInicio: '09:00',
+            horaFin: '09:00 (del día siguiente)',
+            descripcion: 'Competencia de programación de 24 horas',
+            publicoObjetivo: 'Estudiantes',
             lugar: 'Sala de Conferencias',
             organizador: 'Club de Programación',
-            descripcion: 'Competencia de programación de 24 horas',
-            registro: 'https://registro-hackathon-steam.com'
+            registro: 'https://registro-hackathon-steam.com',
+            estado: 'Finalizado'
         }
     ];
 
