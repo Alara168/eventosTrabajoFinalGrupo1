@@ -1,50 +1,28 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const eventos = [
-        {
-            titulo: 'Taller de Robótica',
-            imagen: 'images/taller_robotica.jpg',
-            fecha: '2024-12-01',
-            horaInicio: '15:00',
-            horaFin: '17:00',
-            descripcion: 'Taller práctico de introducción a la robótica',
-            publicoObjetivo: 'Estudiantes',
-            lugar: 'Laboratorio de Robótica',
-            organizador: 'Departamento de Ingeniería',
-            registro: 'https://registro-taller-robotica.com',
-            estado: 'Proximamente'
-        },
-        {
-            titulo: 'Conferencia IA',
-            imagen: 'images/conferencia_ia.jpg',
-            fecha: '2024-12-03',
-            horaInicio: '18:00',
-            horaFin: '20:00',
-            descripcion: 'Charla sobre los últimos avances en Inteligencia Artificial',
-            publicoObjetivo: 'Comunidad Universitaria',
-            lugar: 'Auditorio Principal',
-            organizador: 'Facultad de Informática',
-            registro: 'https://registro-conferencia-ia.com',
-            estado: 'Finalizado'
-        },
-        {
-            titulo: 'Hackathon STEAM',
-            imagen: 'images/hackathon.jpg',
-            fecha: '2024-12-05',
-            horaInicio: '09:00',
-            horaFin: '09:00 (del día siguiente)',
-            descripcion: 'Competencia de programación de 24 horas',
-            publicoObjetivo: 'Estudiantes',
-            lugar: 'Sala de Conferencias',
-            organizador: 'Club de Programación',
-            registro: 'https://registro-hackathon-steam.com',
-            estado: 'Finalizado'
-        }
-    ];
-
     const eventosContainer = document.getElementById('eventos-container');
     const botonAnterior = document.getElementById('boton-anterior');
     const botonSiguiente = document.getElementById('boton-siguiente');
     let startIndex = 0;
+    let eventos = []; // Inicializamos el arreglo de eventos vacío
+
+    // Función para cargar eventos desde la base de datos
+    function cargarEventos() {
+        fetch('http://localhost:3000/eventos') // Cambia la URL según tu configuración
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la carga de eventos: ' + response.status);
+                }
+                return response.json(); // Parsear la respuesta como JSON
+            })
+            .then(data => {
+                eventos = data; // Asignar los eventos obtenidos a la variable global
+                mostrarEventos(); // Mostrar los eventos después de cargarlos
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un problema al cargar los eventos. Inténtalo más tarde.');
+            });
+    }
 
     function mostrarEventos() {
         eventosContainer.innerHTML = '';
@@ -57,12 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
             eventoCard.innerHTML = `
                 <h3>${evento.titulo}</h3>
                 <p>Fecha: ${evento.fecha}</p>
-                <p>Hora: ${evento.hora}</p>
-                <p>Categoría: ${evento.categoria}</p>
+                <p>Hora: ${evento.horaInicio} - ${evento.horaFin}</p>
                 <p>Lugar: ${evento.lugar}</p>
                 <p>Organizador: ${evento.organizador}</p>
                 <p>Descripción: ${evento.descripcion}</p>
-                <a href="#" class="detalles-link">Ver detalles</a>
+                <a href="${evento.registro}" class="detalles-link">Ver detalles</a>
             `;
 
             eventosContainer.appendChild(eventoCard);
@@ -86,8 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    mostrarEventos();
-
     // Redirigir al detalle del evento
     eventosContainer.addEventListener('click', (e) => {
         const link = e.target.closest('.detalles-link');
@@ -99,6 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = 'evento.html';
         }
     });
+
+    // Cargar los eventos al iniciar
+    cargarEventos();
 
     // Calendario Semanal
     const horarioTable = document.getElementById('horario-table');
