@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 eventos = data; // Asignar los eventos obtenidos a la variable global
                 mostrarEventos(); // Mostrar los eventos después de cargarlos
+                mostrarEventosEnHorario(); // Llamar a la función para mostrar en horario
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -32,9 +33,11 @@ document.addEventListener('DOMContentLoaded', function () {
             eventoCard.className = 'evento-card';
             eventoCard.setAttribute('data-index', i);
 
+            const opcionesFormato = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const fechaFormateada = new Date(evento.fecha).toLocaleDateString('es-ES', opcionesFormato);
             eventoCard.innerHTML = `
                 <h3>${evento.titulo}</h3>
-                <p>Fecha: ${evento.fecha}</p>
+                <p>Fecha: ${fechaFormateada}</p>
                 <p>Hora: ${evento.horaInicio} - ${evento.horaFin}</p>
                 <p>Lugar: ${evento.lugar}</p>
                 <p>Organizador: ${evento.organizador}</p>
@@ -103,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
     headerRow += '</tr>';
     horarioTable.innerHTML = headerRow;
 
-    const horas = ['09:00', '11:00', '13:00', '15:00', '17:00'];
+    const horas = ['09:00', '11:00', '13:00', '15:00', '17:00', '19:00'];
 
     horas.forEach(hora => {
         let row = `<tr><td>${hora}</td>`;
@@ -113,4 +116,48 @@ document.addEventListener('DOMContentLoaded', function () {
         row += '</tr>';
         horarioTable.innerHTML += row;
     });
+
+    function mostrarEventosEnHorario() {
+        // Limpiar la tabla antes de agregar nuevos eventos
+        for (let i = 1; i < horarioTable.rows.length; i++) { 
+            for (let j = 1; j < horarioTable.rows[i].cells.length; j++) { 
+                horarioTable.rows[i].cells[j].innerHTML = ''; 
+            }
+        }
+    
+        diasSiguientes.forEach((dia, diaIndex) => {
+            eventos.forEach(evento => {
+                const fechaEvento = new Date(evento.fecha);
+    
+                if (fechaEvento.toLocaleDateString('es-ES') === dia) { // Verificar si el evento corresponde al día actual
+                    const horaInicioEvento = convertirHoraAFranja(evento.horaInicio);
+                    const horaFinEvento = convertirHoraAFranja(evento.horaFin);
+    
+                    horas.forEach((hora, index) => {
+                        // Mostrar el evento en todas las franjas que correspondan
+                        if (hora >= horaInicioEvento && hora < horaFinEvento) {
+                            const celdaHorario = horarioTable.rows[index + 1].cells[diaIndex + 1];
+                            celdaHorario.innerHTML += `<div>${evento.titulo}</div>`;
+                        }
+                    });
+                }
+            });
+        });
+    }
+    
+    function convertirHoraAFranja(hora) {
+        // Convierte una hora exacta a la franja más cercana definida en horas
+        const [horaExacta, minutos] = hora.split(':').map(Number);
+    
+        // Si hay minutos, redondeamos hacia arriba a la siguiente franja
+        if (minutos > 0) {
+            return `${horaExacta + 1}:00`; // Redondear a la siguiente franja
+        } else {
+            return `${horaExacta}:00`; // Mantener la misma hora si son exactas
+        }
+    }
+    
+    
+    
+    
 });
