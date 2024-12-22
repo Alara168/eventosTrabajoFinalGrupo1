@@ -1,7 +1,6 @@
-// login.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login');
+    const messageDiv = document.getElementById('message');
 
     // Manejar el evento de envío del formulario
     loginForm.addEventListener('submit', function(event) {
@@ -13,42 +12,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Validación básica
         if (username === '' || password === '') {
-            alert('Por favor, completa todos los campos.');
+            messageDiv.innerHTML = '<div class="error-message">Por favor, completa todos los campos.</div>';
             return;
         }
 
         // Crear el objeto de datos a enviar
-        const loginData = {
-            username: username,
-            password: password
-        };
+        const loginData = new URLSearchParams();
+        loginData.append('username', username);
+        loginData.append('password', password);
 
         // Enviar la solicitud POST al servidor
-        fetch('http://localhost:3000/login', {
+        fetch('login.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Indica que se envían datos en formato JSON
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify(loginData) // Convertir el objeto a una cadena JSON
+            body: loginData.toString() // Convertir el objeto a una cadena URL-encoded
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Error en la solicitud: ' + response.status);
+                throw new Error('Error en la comunicación con el servidor.');
             }
-            return response.json(); // Parsear la respuesta como JSON
+            return response.json();
         })
-        .then(data => {
-            // Manejar la respuesta del servidor
-            if (data.success) {
-                alert('Inicio de sesión exitoso. Bienvenido!');
-                window.location.href = 'dashboard.html'; // Redirigir a otra página
+        .then(jsonData => {
+            console.log(jsonData); // Registra lo que se recibe
+            if (jsonData.success) {
+                window.location.href = jsonData.redirect; // Redirige a la página especificada
             } else {
-                alert(data.message || 'Nombre de usuario o contraseña incorrectos.');
+                messageDiv.innerHTML = `<div class="error-message">${jsonData.message}</div>`;
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('Hubo un problema con la solicitud. Inténtalo más tarde.');
+            console.error('Error en la solicitud:', error);
+            messageDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
         });
     });
 });

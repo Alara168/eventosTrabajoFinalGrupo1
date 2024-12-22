@@ -24,17 +24,15 @@
         <section id="register-form">
             <h2>Registrarse</h2>
             <form id="register">
-                <input type="text" id="reg-username" placeholder="Nombre de usuario" required>
-                <input type="email" id="reg-email" placeholder="Correo electrónico" required>
-                <input type="password" id="reg-password" placeholder="Contraseña" required>
+                <input type="text" id="username" placeholder="Nombre de usuario" required>
+                <input type="email" id="email" placeholder="Correo electrónico" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
                 <select id="user-type" required>
                     <option value="">Seleccione tipo de usuario</option>
                     <option value="estudiante">Estudiante</option>
                     <option value="profesor">Profesor</option>
-                    <option value="coordinador">Coordinador</option>
-                    <option value="direccion">Dirección</option>
                 </select>
-                <input type="text" id="verification-code" placeholder="Código de verificación" required>
+                <input type="text" id="verification-code" placeholder="Código de verificación" style="display: none;">
                 <button type="submit">Registrarse</button>
             </form>
         </section>

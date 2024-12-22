@@ -1,53 +1,51 @@
-// register.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('register');
+    const userTypeSelect = document.getElementById('user-type');
+    const verificationCodeInput = document.getElementById('verification-code');
 
-    // Manejar el evento de envío del formulario
+    userTypeSelect.addEventListener('change', function() {
+        if (this.value === 'profesor') {
+            verificationCodeInput.style.display = 'block';
+            verificationCodeInput.required = true;
+        } else {
+            verificationCodeInput.style.display = 'none';
+            verificationCodeInput.required = false;
+            verificationCodeInput.value = '';
+        }
+    });
+
     registerForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+        event.preventDefault();
 
-        // Obtener los valores de los campos de entrada
-        const username = document.getElementById('reg-username').value;
-        const email = document.getElementById('reg-email').value;
-        const password = document.getElementById('reg-password').value;
-        const userType = document.getElementById('user-type').value;
-        const verificationCode = document.getElementById('verification-code').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const userType = userTypeSelect.value;
+        const verificationCode = verificationCodeInput.value;
 
-        // Validación básica
-        if (username === '' || email === '' || password === '' || userType === '' || verificationCode === '') {
-            alert('Por favor, completa todos los campos.');
+        if (username === '' || email === '' || password === '' || userType === '' || (userType === 'profesor' && verificationCode === '')) {
+            alert('Por favor, completa todos los campos requeridos.');
             return;
         }
 
-        // Crear el objeto de datos a enviar
-        const registerData = {
-            username: username,
-            email: email,
-            password: password,
-            userType: userType,
-            verificationCode: verificationCode
-        };
+        let formData = `username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&userType=${encodeURIComponent(userType)}`;
+        
+        if (userType === 'profesor') {
+            formData += `&verificationCode=${encodeURIComponent(verificationCode)}`;
+        }
 
-        // Enviar la solicitud POST al servidor
-        fetch('http://localhost:3000/register', {
+        fetch('register.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Indica que se envían datos en formato JSON
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify(registerData) // Convertir el objeto a una cadena JSON
+            body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error en la solicitud: ' + response.status);
-            }
-            return response.json(); // Parsear la respuesta como JSON
-        })
+        .then(response => response.json())
         .then(data => {
-            // Manejar la respuesta del servidor
             if (data.success) {
                 alert('Registro exitoso. Por favor, inicia sesión.');
-                window.location.href = 'login.html'; // Redirigir a la página de inicio de sesión
+                window.location.href = 'login.html';
             } else {
                 alert(data.message || 'Hubo un problema con el registro. Inténtalo de nuevo.');
             }
