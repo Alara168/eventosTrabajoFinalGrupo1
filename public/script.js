@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para cargar eventos desde la base de datos
     function cargarEventos() {
-        fetch('http://localhost:3000/eventos') // Cambia la URL según tu configuración
+        fetch('cargar_eventos.php') // Cambia la URL según tu configuración
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error en la carga de eventos: ' + response.status);
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p>Lugar: ${evento.lugar}</p>
                 <p>Organizador: ${evento.organizador}</p>
                 <p>Descripción: ${evento.descripcion}</p>
+                <div class="qr-container" id="qr-${i}"></div>
                 <a href="${evento.registro}" class="detalles-link">Ver detalles</a>
             `;
 
