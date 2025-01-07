@@ -1,6 +1,5 @@
 <?php
 require_once 'db_connection.php';
-session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
@@ -12,16 +11,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
+            session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_type'] = $user['user_type'];
 
-            echo json_encode(['success' => true, 'userType' => $user['user_type']]);
+            if ($user['user_type'] === 'profesor') {
+                echo json_encode(['success' => true, 'redirect' => 'profesor_eventos.php']);
+            } else {
+                echo json_encode(['success' => true, 'redirect' => 'index.html']);
+            }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Credenciales incorrectas.']);
+            echo json_encode(['success' => false, 'message' => 'Credenciales incorrectas']);
         }
     } catch (PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Error interno.']);
+        error_log("Error en el login: " . $e->getMessage());
+        echo json_encode(['success' => false, 'message' => 'Error interno']);
     }
 }
 ?>
