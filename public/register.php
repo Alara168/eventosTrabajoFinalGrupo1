@@ -10,73 +10,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $errors = [];
 
-    // Validación del nombre de usuario
-    if (empty($username)) {
-        $errors[] = "Por favor, introduce un nombre de usuario.";
-    } elseif (strlen($username) < 3) {
-        $errors[] = "El nombre de usuario debe tener al menos 3 caracteres.";
-    } else {
-        try {
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
-            $stmt->execute(['username' => $username]);
-            if ($stmt->fetchColumn() > 0) {
-                $errors[] = "El nombre de usuario ya está en uso.";
-            }
-        } catch (PDOException $e) {
-            $errors[] = "Error al verificar el nombre de usuario: " . $e->getMessage();
-        }
+    // Validaciones
+    if (empty($username) || empty($email) || empty($password) || empty($userType)) {
+        $errors[] = "Todos los campos son obligatorios.";
     }
 
-    // Validación del correo electrónico
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Por favor, introduce un correo electrónico válido.";
+    if ($userType === 'profesor' && $verificationCode !== 'clave-secreta-profesor') {
+        $errors[] = "Clave de profesor incorrecta.";
     }
 
-    // Validación de la contraseña
-    if (empty($password)) {
-        $errors[] = "Por favor, introduce una contraseña.";
-    } elseif (strlen($password) < 6) {
-        $errors[] = "La contraseña debe tener al menos 6 caracteres.";
-    }
-
-    // Validación del tipo de usuario
-    if (empty($userType) || !in_array($userType, ['estudiante', 'profesor'])) {
-        $errors[] = "Por favor, selecciona un tipo de usuario válido.";
-    }
-
-    // Validación del código de verificación para profesores
-    if ($userType === 'profesor') {
-        if ($verificationCode !== '16752') {
-            $errors[] = "Código de verificación incorrecto.";
-        }
-    }
-
-    // Si no hay errores, proceder a insertar el nuevo usuario
     if (empty($errors)) {
         try {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (username, email, password, user_type) VALUES (:username, :email, :password, :userType)");
             $stmt->execute([
                 'username' => $username,
                 'email' => $email,
-                'password' => $hashed_password,
+                'password' => $hashedPassword,
                 'userType' => $userType
             ]);
-
-            echo json_encode(['success' => true, 'message' => 'Registro exitoso. Por favor, inicia sesión.']);
-            exit();
-        } catch(PDOException $e) {
-            $errors[] = "Error en el registro: " . $e->getMessage();
+            echo json_encode(['success' => true]);
+        } catch (PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Error al registrar el usuario.']);
         }
-    }
-
-    if (!empty($errors)) {
+    } else {
         echo json_encode(['success' => false, 'message' => implode(' ', $errors)]);
-        exit();
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Método de solicitud no válido']);
-    exit();
 }
-?>

@@ -10,10 +10,9 @@
     <header>
         <nav>
             <ul>
-                <li><img src="images\logo.webp" alt="Logo Escuela STEAM" class="logo"> </li>
+                <li><img src="images/logo.webp" alt="Logo Escuela STEAM" class="logo"></li>
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="#eventos">Eventos</a></li>
-                <li><a href="#horario">Horario</a></li>
+                <li><a href="evento.html">Eventos</a></li>
                 <li><a href="login.html">Iniciar Sesión</a></li>
                 <li><a href="">Registrarse</a></li>
             </ul>
@@ -32,9 +31,10 @@
                     <option value="estudiante">Estudiante</option>
                     <option value="profesor">Profesor</option>
                 </select>
-                <input type="text" id="verification-code" placeholder="Código de verificación" style="display: none;">
+                <input type="text" id="verification-code" placeholder="Clave de profesor" style="display: none;">
                 <button type="submit">Registrarse</button>
             </form>
+            <div id="message"></div>
         </section>
     </main>
 
@@ -42,6 +42,69 @@
         <p>&copy; 2024 Escuela STEAM. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="register.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userTypeSelect = document.getElementById('user-type');
+            const verificationCodeInput = document.getElementById('verification-code');
+
+            userTypeSelect.addEventListener('change', function () {
+                if (this.value === 'profesor') {
+                    verificationCodeInput.style.display = 'block';
+                    verificationCodeInput.required = true;
+                } else {
+                    verificationCodeInput.style.display = 'none';
+                    verificationCodeInput.required = false;
+                    verificationCodeInput.value = '';
+                }
+            });
+
+            const registerForm = document.getElementById('register');
+            registerForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const userType = document.getElementById('user-type').value;
+                const verificationCode = document.getElementById('verification-code').value;
+
+                if (!username || !email || !password || !userType || (userType === 'profesor' && !verificationCode)) {
+                    alert('Por favor, completa todos los campos.');
+                    return;
+                }
+
+                const formData = new URLSearchParams();
+                formData.append('username', username);
+                formData.append('email', email);
+                formData.append('password', password);
+                formData.append('userType', userType);
+
+                if (userType === 'profesor') {
+                    formData.append('verificationCode', verificationCode);
+                }
+
+                fetch('register.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData.toString()
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Registro exitoso. Por favor, inicia sesión.');
+                        window.location.href = 'login.html';
+                    } else {
+                        alert(data.message || 'Hubo un problema con el registro.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Hubo un problema con la solicitud.');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

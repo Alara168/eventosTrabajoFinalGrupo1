@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Evento</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="evento.html">Eventos</a></li>
+                <li><a href="#horario">Horario</a></li>
+                <li><a href="logout.php">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="crear-evento">
+            <h2>Crear un nuevo evento</h2>
+            <form id="crearEventoForm">
+                <input type="text" id="titulo" placeholder="Título del evento" required>
+                <input type="date" id="fecha" required>
+                <input type="time" id="horaInicio" required>
+                <input type="time" id="horaFin" required>
+                <input type="text" id="lugar" placeholder="Lugar" required>
+                <input type="text" id="organizador" placeholder="Organizador" required>
+                <textarea id="descripcion" placeholder="Descripción del evento" required></textarea>
+                <input type="url" id="registro" placeholder="Enlace para registro" required>
+                <button type="submit">Crear Evento</button>
+            </form>
+            <div id="message"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Escuela STEAM. Todos los derechos reservados.</p>
+    </footer>
+    <script src="crear_evento.js"></script>
+</body>
+</html>
