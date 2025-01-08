@@ -24,8 +24,8 @@ try {
         $stmt->execute(['estado' => $estado, 'id' => $id]);
         echo json_encode(['success' => true, 'message' => 'Estado del evento actualizado']);
     }else {
-        $stmt = $pdo->prepare("UPDATE eventos SET finalizado = 1 WHERE id = :id");
-        $stmt->execute([ 'id' => $id]);
+        $stmt = $pdo->prepare("UPDATE eventos SET denegado = 1 WHERE id = :id");
+        $stmt->execute(['id' => $id]);
         echo json_encode(['success' => true, 'message' => 'Estado del evento actualizado 2']);
     }
 } catch (PDOException $e) {

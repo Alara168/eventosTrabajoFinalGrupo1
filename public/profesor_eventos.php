@@ -11,7 +11,7 @@ require_once 'db_connection.php';
 ob_clean();
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM eventos  WHERE finalizado = 0 AND aprobado = 0 ORDER BY fecha ASC");
+    $stmt = $pdo->prepare("SELECT * FROM eventos  WHERE finalizado = 0 AND aprobado = 0 AND denegado = 0 ORDER BY fecha ASC");
     $stmt->execute();
     $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -75,7 +75,6 @@ try {
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            alert('Estado actualizado');
                             location.reload();
                         } else {
                             alert('Error al actualizar el estado');
