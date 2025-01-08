@@ -8,8 +8,10 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'profesor') {
 
 require_once 'db_connection.php';
 
+ob_clean();
+
 try {
-    $stmt = $pdo->prepare("SELECT id, titulo, fecha, horaInicio, horaFin, lugar, organizador, descripcion, estado FROM eventos  WHERE finalizado = 0 ORDER BY fecha ASC");
+    $stmt = $pdo->prepare("SELECT * FROM eventos  WHERE finalizado = 0 AND aprobado = 0 ORDER BY fecha ASC");
     $stmt->execute();
     $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -28,9 +30,12 @@ try {
 </head>
 <body>
     <header>
-        <nav>
+    <nav id="navbar">
             <ul>
+                <li><img src="images/logo.webp" alt="Logo Escuela STEAM" class="logo"></li>
                 <li><a href="index.html">Inicio</a></li>
+                <li><a href="evento.html">Eventos</a></li>
+                <!-- Las opciones de usuario logueado se añadirán dinámicamente -->
             </ul>
         </nav>
     </header>
@@ -44,7 +49,7 @@ try {
                         <p>Fecha: <?php echo htmlspecialchars($evento['fecha']); ?></p>
                         <p>Hora: <?php echo htmlspecialchars($evento['horaInicio'] . ' - ' . $evento['horaFin']); ?></p>
                         <p>Lugar: <?php echo htmlspecialchars($evento['lugar']); ?></p>
-                        <p>Estado: <span><?php echo htmlspecialchars($evento['estado']); ?></span></p>
+                        
                         <button class="confirmar" data-id="<?php echo $evento['id']; ?>">Confirmar</button>
                         <button class="denegar" data-id="<?php echo $evento['id']; ?>">Denegar</button>
                     </div>
@@ -60,7 +65,7 @@ try {
             document.querySelectorAll('.confirmar, .denegar').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.dataset.id;
-                    const estado = button.classList.contains('confirmar') ? 'confirmado' : 'denegado';
+                    const estado = button.classList.contains('confirmar') ? 1 : 0;
 
                     fetch('cambiar_estado_evento.php', {
                         method: 'POST',
@@ -81,5 +86,6 @@ try {
             });
         });
     </script>
+    <script src="navbar.js"></script>
 </body>
 </html>
