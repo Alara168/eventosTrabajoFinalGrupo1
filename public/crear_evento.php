@@ -2,6 +2,8 @@
 require_once 'db_connection.php';
 session_start();
 
+ob_end_clean();
+
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Acceso no autorizado.']);
     exit();
