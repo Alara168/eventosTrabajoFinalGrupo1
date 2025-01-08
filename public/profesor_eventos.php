@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'profesor') {
 require_once 'db_connection.php';
 
 try {
-    $stmt = $pdo->prepare("SELECT id, titulo, fecha, horaInicio, horaFin, lugar, organizador, descripcion, estado FROM eventos ORDER BY fecha ASC");
+    $stmt = $pdo->prepare("SELECT id, titulo, fecha, horaInicio, horaFin, lugar, organizador, descripcion, estado FROM eventos  WHERE finalizado = 0 ORDER BY fecha ASC");
     $stmt->execute();
     $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
