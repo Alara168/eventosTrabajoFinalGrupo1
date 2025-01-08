@@ -1,11 +1,6 @@
 <?php
 require_once 'db_connection.php';
 
-// Iniciar sesión al principio del script
-session_start();
-
-ob_end_clean();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
@@ -16,15 +11,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
+            session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_type'] = $user['user_type'];
 
-            if ($user['user_type'] === 'profesor') {
-                echo json_encode(['success' => true, 'redirect' => 'profesor_eventos.php']);
-            } else {
-                echo json_encode(['success' => true, 'redirect' => 'index.html']);
-            }
+            echo json_encode([
+                'success' => true,
+                'userType' => $user['user_type'], // Añadir el tipo de usuario en la respuesta
+                'redirect' => $user['user_type'] === 'profesor' ? 'profesor_eventos.php' : 'index.html'
+            ]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Credenciales incorrectas']);
         }

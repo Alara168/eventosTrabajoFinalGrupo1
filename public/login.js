@@ -36,8 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(jsonData => {
-            console.log(jsonData); // Registra lo que se recibe
             if (jsonData.success) {
+                // Guardar el estado del usuario en localStorage
+                localStorage.setItem('userLoggedIn', 'true');
+                localStorage.setItem('userType', jsonData.userType); // Guardar el tipo de usuario (profesor o estudiante)
                 window.location.href = jsonData.redirect; // Redirige a la página especificada
             } else {
                 messageDiv.innerHTML = `<div class="error-message">${jsonData.message}</div>`;

@@ -1,21 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar').querySelector('ul');
 
-    // Verificar si el usuario está logueado (por ejemplo, comprobando una cookie o localStorage)
-    const userLoggedIn = localStorage.getItem('userLoggedIn'); // Simula el estado del usuario
+    // Verificar si el usuario está logueado (por ejemplo, comprobando localStorage)
+    const userLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+    const userType = localStorage.getItem('userType'); // Obtener el tipo de usuario
 
-    if (userLoggedIn === 'true') {
-        // Opciones adicionales para usuarios logueados
-        const crearEventoItem = document.createElement('li');
-        crearEventoItem.innerHTML = '<a href="crear_evento.html">Crear Evento</a>';
+    if (userLoggedIn) {
+        if (userType === 'profesor') {
+            const gestionarEventosItem = document.createElement('li');
+            gestionarEventosItem.innerHTML = '<a href="profesor_eventos.php">Gestionar Eventos</a>';
+            navbar.appendChild(gestionarEventosItem);
+        } else if (userType === 'estudiante') {
+            const crearEventoItem = document.createElement('li');
+            crearEventoItem.innerHTML = '<a href="crear_evento.html">Crear Evento</a>';
+            navbar.appendChild(crearEventoItem);
+        }
 
         const logoutItem = document.createElement('li');
-        logoutItem.innerHTML = '<a href="logout.html">Cerrar Sesión</a>';
-
-        navbar.appendChild(crearEventoItem);
+        logoutItem.innerHTML = '<a href="logout.php">Cerrar Sesión</a>';
         navbar.appendChild(logoutItem);
     } else {
-        // Opciones para usuarios no logueados
         const loginItem = document.createElement('li');
         loginItem.innerHTML = '<a href="login.html">Iniciar Sesión</a>';
 
