@@ -5,7 +5,7 @@ header('Content-Type: application/json'); // Establecer el tipo de contenido com
 
 try {
     // Consulta para obtener los eventos
-    $stmt = $pdo->prepare("SELECT titulo, fecha, horaInicio, horaFin, lugar, organizador, descripcion, registro FROM eventos ORDER BY fecha ASC");
+    $stmt = $pdo->prepare("SELECT titulo, fecha, horaInicio, horaFin, lugar, organizador, descripcion, registro FROM eventos WHERE finalizado = 0 ORDER BY fecha ASC");
     $stmt->execute();
 
     // Obtener los resultados en un arreglo asociativo
