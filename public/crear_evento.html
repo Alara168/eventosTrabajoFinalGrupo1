@@ -17,19 +17,37 @@
     </header>
     <main>
         <section id="crear-evento">
-            <h2>Crear un nuevo evento</h2>
-            <form id="crearEventoForm">
-                <input type="text" id="titulo" placeholder="Título del evento" required>
-                <input type="date" id="fecha" required>
-                <input type="time" id="horaInicio" required>
-                <input type="time" id="horaFin" required>
-                <input type="text" id="lugar" placeholder="Lugar" required>
-                <input type="text" id="organizador" placeholder="Organizador" required>
-                <textarea id="descripcion" placeholder="Descripción del evento" required></textarea>
-                <input type="url" id="registro" placeholder="Enlace para registro" required>
-                <button type="submit">Crear Evento</button>
-            </form>
-            <div id="message"></div>
+            <div class="form-container">
+                <h2 class="form-title">Crear un Nuevo Evento</h2>
+                <form id="crearEventoForm">
+                    <label for="titulo">Título del Evento</label>
+                    <input type="text" id="titulo" placeholder="Título del evento" required>
+
+                    <label for="fecha">Fecha del Evento</label>
+                    <input type="date" id="fecha" required>
+
+                    <label for="horaInicio">Hora de Inicio</label>
+                    <input type="time" id="horaInicio" required>
+
+                    <label for="horaFin">Hora de Finalización</label>
+                    <input type="time" id="horaFin" required>
+
+                    <label for="lugar">Lugar</label>
+                    <input type="text" id="lugar" placeholder="Lugar del evento" required>
+
+                    <label for="organizador">Organizador</label>
+                    <input type="text" id="organizador" placeholder="Nombre del organizador" required>
+
+                    <label for="descripcion">Descripción del Evento</label>
+                    <textarea id="descripcion" placeholder="Breve descripción del evento" required></textarea>
+
+                    <label for="registro">Enlace para Registro</label>
+                    <input type="url" id="registro" placeholder="https://example.com/registro" required>
+
+                    <button type="submit" class="btn-submit">Crear Evento</button>
+                </form>
+                <div id="message" class="message-box"></div>
+            </div>
         </section>
     </main>
     <footer>
