@@ -1,5 +1,6 @@
 <?php
 require_once 'db_connection.php';
+require_once 'lib/phpqrcode/qrlib.php'; // Incluye la biblioteca QR Code
 session_start();
 
 ob_end_clean();
@@ -25,7 +26,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO eventos (titulo, fecha, horaInicio, horaFin, lugar, organizador, descripcion, registro) VALUES (:titulo, :fecha, :horaInicio, :horaFin, :lugar, :organizador, :descripcion, :registro)");
+        // Generar QR Code
+        $qrDirectory = 'qrcodes/';
+        if (!is_dir($qrDirectory)) {
+            mkdir($qrDirectory, 0755, true); // Crear directorio si no existe
+        }
+
+        $qrFileName = $qrDirectory . uniqid('evento_') . '.png'; // Nombre único para el archivo QR
+        QRcode::png($registro, $qrFileName, QR_ECLEVEL_L, 10); // Generar el QR Code
+
+        // Guardar el evento en la base de datos
+        $stmt = $pdo->prepare("INSERT INTO eventos (titulo, fecha, horaInicio, horaFin, lugar, organizador, descripcion, registro, qr_path) 
+            VALUES (:titulo, :fecha, :horaInicio, :horaFin, :lugar, :organizador, :descripcion, :registro, :qr_path)");
         $stmt->execute([
             'titulo' => $titulo,
             'fecha' => $fecha,
@@ -34,10 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'lugar' => $lugar,
             'organizador' => $organizador,
             'descripcion' => $descripcion,
-            'registro' => $registro
+            'registro' => $registro,
+            'qr_path' => $qrFileName
         ]);
 
-        echo json_encode(['success' => true]);
+        echo json_encode(['success' => true, 'qr_path' => $qrFileName]);
     } catch (PDOException $e) {
         error_log('Error al crear el evento: ' . $e->getMessage());
         echo json_encode(['success' => false, 'message' => 'Hubo un error al guardar el evento.']);
