@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-12-2024 a las 19:25:35
+-- Tiempo de generación: 09-01-2025 a las 21:06:17
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `eventos_db`
 --
-CREATE DATABASE IF NOT EXISTS `eventos_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `eventos_db`;
 
 -- --------------------------------------------------------
 
@@ -38,22 +36,30 @@ CREATE TABLE `eventos` (
   `lugar` varchar(255) NOT NULL,
   `organizador` varchar(255) NOT NULL,
   `descripcion` text NOT NULL,
-  `registro` varchar(255) NOT NULL
+  `registro` varchar(255) NOT NULL,
+  `aprobado` tinyint(1) DEFAULT 0,
+  `finalizado` tinyint(1) GENERATED ALWAYS AS (case when `fecha` < current_timestamp() then 1 else 0 end) VIRTUAL,
+  `denegado` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `eventos`
 --
 
-INSERT INTO `eventos` (`id`, `titulo`, `fecha`, `horaInicio`, `horaFin`, `lugar`, `organizador`, `descripcion`, `registro`) VALUES
-(9, 'Taller de Programación', '2024-12-23', '10:00:00', '12:00:00', 'Aula 101', 'Escuela STEAM', 'Un taller introductorio a la programación para estudiantes.', 'http://example.com/registro-taller-programacion'),
-(10, 'Charla sobre Robótica', '2024-12-24', '14:00:00', '16:00:00', 'Aula 102', 'Escuela STEAM', 'Charla sobre las últimas tendencias en robótica.', 'http://example.com/registro-charla-robotica'),
-(11, 'Día de Juegos Científicos', '2024-12-25', '09:00:00', '17:00:00', 'Gimnasio', 'Escuela STEAM', 'Un día lleno de juegos y experimentos científicos.', 'http://example.com/registro-juegos-cientificos'),
-(12, 'Exposición de Proyectos', '2024-12-26', '11:00:00', '15:00:00', 'Sala Principal', 'Escuela STEAM', 'Exposición de proyectos realizados por los estudiantes.', 'http://example.com/registro-exposicion-proyectos'),
-(13, 'Concurso de Matemáticas', '2024-12-27', '10:30:00', '13:30:00', 'Aula 103', 'Escuela STEAM', 'Competencia para estudiantes con pasión por las matemáticas.', 'http://example.com/registro-concurso-matematicas'),
-(14, 'Clase Abierta de Arte', '2024-12-28', '16:00:00', '18:00:00', 'Aula de Arte', 'Escuela STEAM', 'Clase abierta para explorar técnicas artísticas.', 'http://example.com/registro-clase-abierta-arte'),
-(15, 'Taller de Ciencias Naturales', '2024-12-29', '09:30:00', '11:30:00', 'Laboratorio de Ciencias', 'Escuela STEAM', 'Un taller práctico sobre ciencias naturales.', 'http://example.com/registro-taller-ciencias-naturales'),
-(16, 'Fiesta de Fin de Año Escolar', '2024-12-30', '18:00:00', '21:00:00', 'Gimnasio Principal', 'Escuela STEAM', 'Celebración del fin del año escolar con actividades y sorpresas.', 'http://example.com/registro-fiesta-fin-de-año');
+INSERT INTO `eventos` (`id`, `titulo`, `fecha`, `horaInicio`, `horaFin`, `lugar`, `organizador`, `descripcion`, `registro`, `aprobado`, `denegado`) VALUES
+(9, 'Taller de Programación', '2025-01-09', '10:00:00', '12:00:00', 'Aula 101', 'Escuela STEAM', 'Un taller introductorio a la programación para estudiantes.', 'http://example.com/registro-taller-programacion', 0, 0),
+(10, 'Charla sobre Robótica', '2025-01-23', '14:00:00', '16:00:00', 'Aula 102', 'Escuela STEAM', 'Charla sobre las últimas tendencias en robótica.', 'http://example.com/registro-charla-robotica', 1, 0),
+(11, 'Día de Juegos Científicos', '2024-12-25', '09:00:00', '17:00:00', 'Gimnasio', 'Escuela STEAM', 'Un día lleno de juegos y experimentos científicos.', 'http://example.com/registro-juegos-cientificos', 0, 0),
+(12, 'Exposición de Proyectos', '2024-12-26', '11:00:00', '15:00:00', 'Sala Principal', 'Escuela STEAM', 'Exposición de proyectos realizados por los estudiantes.', 'http://example.com/registro-exposicion-proyectos', 0, 0),
+(13, 'Concurso de Matemáticas', '2024-12-27', '10:30:00', '13:30:00', 'Aula 103', 'Escuela STEAM', 'Competencia para estudiantes con pasión por las matemáticas.', 'http://example.com/registro-concurso-matematicas', 0, 0),
+(14, 'Clase Abierta de Arte', '2024-12-28', '16:00:00', '18:00:00', 'Aula de Arte', 'Escuela STEAM', 'Clase abierta para explorar técnicas artísticas.', 'http://example.com/registro-clase-abierta-arte', 0, 0),
+(15, 'Taller de Ciencias Naturales', '2024-12-29', '09:30:00', '11:30:00', 'Laboratorio de Ciencias', 'Escuela STEAM', 'Un taller práctico sobre ciencias naturales.', 'http://example.com/registro-taller-ciencias-naturales', 0, 0),
+(16, 'Fiesta de Fin de Año Escolar', '2024-12-30', '18:00:00', '21:00:00', 'Gimnasio Principal', 'Escuela STEAM', 'Celebración del fin del año escolar con actividades y sorpresas.', 'http://example.com/registro-fiesta-fin-de-año', 0, 0),
+(17, 'Clase Robótica', '2025-01-11', '10:30:00', '12:30:00', 'Aula C112', 'Bemposta', 'Clase para realizar la prueba del trabajo final', 'https://example.com/robots', 1, 0),
+(20, 'Clase Robótica', '2025-01-12', '10:30:00', '12:30:00', 'Aula C112', 'Bemposta', 'Clase para realizar la prueba del trabajo final', 'https://example.com/robots', 1, 0),
+(21, 'Trabajo webs', '2025-01-10', '08:30:00', '10:30:00', 'Aula C304', 'Ana', 'Presentación trabajo desarrollo webs', 'https://example.com/webs', 1, 0),
+(22, 'Presentación SSII', '2025-01-14', '12:20:00', '14:20:00', 'Laboratorio Veterinaria', 'Escuela STEAM', 'Presentación trabajo Sistemas Inteligentes', 'https://www.example.com/SSII', 1, 0),
+(23, 'a', '2025-01-15', '12:12:00', '12:45:00', 'a', 'a', 'a', 'https://example.com/aa', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -76,7 +82,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `user_type`, `created_at`) VALUES
 (1, 'fasc', 'sdf@gmail.com', '$2y$10$8XjggSptPLlBOLBzAgvqi.Aey6OGCXmia459KqBuLF6EkEw2w1Anu', 'estudiante', '2024-12-22 09:21:21'),
-(2, 'alara', 'alara@gmail.com', '$2y$10$rF/2q0VcpM2OpCHkQNf.FeYLT7qRNxqx.VOZm.YyNHUZVShLVD3.i', 'estudiante', '2024-12-22 09:22:12');
+(2, 'alara', 'alara@gmail.com', '$2y$10$rF/2q0VcpM2OpCHkQNf.FeYLT7qRNxqx.VOZm.YyNHUZVShLVD3.i', 'estudiante', '2024-12-22 09:22:12'),
+(3, 'borja', 'sabiondo@gmail.com', '$2y$10$e3ZiUm14d0virpxFopMbhuG3FD78oASTlsRva5ojldZdm1zbvwwee', 'estudiante', '2025-01-08 09:45:51'),
+(4, 'ana', 'ana@ana.com', '$2y$10$r1gFKAUrNyXW252P2BXwsu/YpLWJLF6WFM4x9cNG6RlPcYAQb280C', 'profesor', '2025-01-08 12:04:58');
 
 --
 -- Índices para tablas volcadas
@@ -104,21 +112,14 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
-
-ALTER TABLE eventos
-ADD COLUMN finalizado BOOLEAN GENERATED ALWAYS AS
-(CASE WHEN fecha < CURRENT_TIMESTAMP() THEN TRUE ELSE FALSE END) VIRTUAL;
-
-ALTER TABLE eventos
-ADD COLUMN denegado BOOLEAN DEFAULT FALSE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
