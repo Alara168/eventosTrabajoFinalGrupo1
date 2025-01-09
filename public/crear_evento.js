@@ -28,14 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 messageDiv.textContent = 'Evento creado exitosamente.';
                 form.reset();
 
-                if (data.qr_path) {
-                    const qrImage = document.createElement('img');
-                    qrImage.src = data.qr_path;
-                    qrImage.alt = 'QR Code del evento';
-                    qrImage.style.maxWidth = '200px';
-                    qrImage.style.marginTop = '1rem';
-                    messageDiv.appendChild(qrImage);
-                }
             } else {
                 messageDiv.textContent = data.message || 'Hubo un problema al crear el evento.';
             }
