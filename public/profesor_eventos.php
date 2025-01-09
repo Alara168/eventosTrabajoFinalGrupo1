@@ -34,7 +34,6 @@ try {
             <ul>
                 <li><img src="images/logo.webp" alt="Logo Escuela STEAM" class="logo"></li>
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="evento.html">Eventos</a></li>
                 <!-- Las opciones de usuario logueado se añadirán dinámicamente -->
             </ul>
         </nav>
