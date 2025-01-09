@@ -3,21 +3,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const botonAnterior = document.getElementById('boton-anterior');
     const botonSiguiente = document.getElementById('boton-siguiente');
     let startIndex = 0;
-    let eventos = []; // Inicializamos el arreglo de eventos vacío
+    let eventos = []; 
 
-    // Función para cargar eventos desde la base de datos
     function cargarEventos() {
-        fetch('cargar_eventos.php') // Cambia la URL según tu configuración
+        fetch('cargar_eventos.php') 
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error en la carga de eventos: ' + response.status);
                 }
-                return response.json(); // Parsear la respuesta como JSON
+                return response.json(); 
             })
             .then(data => {
-                eventos = data; // Asignar los eventos obtenidos a la variable global
-                mostrarEventos(); // Mostrar los eventos después de cargarlos
-                mostrarEventosEnHorario(); // Llamar a la función para mostrar en horario
+                eventos = data; 
+                mostrarEventos(); 
+                mostrarEventosEnHorario(); 
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -69,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Redirigir al detalle del evento
     eventosContainer.addEventListener('click', (e) => {
         const link = e.target.closest('.detalles-link');
         if (link) {
@@ -81,10 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Cargar los eventos al iniciar
     cargarEventos();
 
-    // Calendario Semanal
     const horarioTable = document.getElementById('horario-table');
     const diasSiguientes = generarDiasSiguientes();
 
@@ -113,14 +109,13 @@ document.addEventListener('DOMContentLoaded', function () {
     horas.forEach(hora => {
         let row = `<tr><td>${hora}</td>`;
         diasSiguientes.forEach(() => {
-            row += '<td></td>'; // Celdas vacías
+            row += '<td></td>'; 
         });
         row += '</tr>';
         horarioTable.innerHTML += row;
     });
 
     function mostrarEventosEnHorario() {
-        // Limpiar la tabla antes de agregar nuevos eventos
         for (let i = 1; i < horarioTable.rows.length; i++) { 
             for (let j = 1; j < horarioTable.rows[i].cells.length; j++) { 
                 horarioTable.rows[i].cells[j].innerHTML = ''; 
@@ -131,12 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
             eventos.forEach(evento => {
                 const fechaEvento = new Date(evento.fecha);
     
-                if (fechaEvento.toLocaleDateString('es-ES') === dia) { // Verificar si el evento corresponde al día actual
+                if (fechaEvento.toLocaleDateString('es-ES') === dia) { 
                     const horaInicioEvento = convertirHoraAFranja(evento.horaInicio);
                     const horaFinEvento = convertirHoraAFranja(evento.horaFin);
     
                     horas.forEach((hora, index) => {
-                        // Mostrar el evento en todas las franjas que correspondan
                         if (hora >= horaInicioEvento && hora < horaFinEvento) {
                             const celdaHorario = horarioTable.rows[index + 1].cells[diaIndex + 1];
                             celdaHorario.innerHTML += `<div>${evento.titulo}</div>`;
@@ -148,14 +142,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function convertirHoraAFranja(hora) {
-        // Convierte una hora exacta a la franja más cercana definida en horas
         const [horaExacta, minutos] = hora.split(':').map(Number);
     
-        // Si hay minutos, redondeamos hacia arriba a la siguiente franja
         if (minutos > 0) {
-            return `${horaExacta + 1}:00`; // Redondear a la siguiente franja
+            return `${horaExacta + 1}:00`; 
         } else {
-            return `${horaExacta}:00`; // Mantener la misma hora si son exactas
+            return `${horaExacta}:00`; 
         }
     }
     

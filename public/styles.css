@@ -15,24 +15,24 @@ header {
 
 .header-content {
     display: flex;
-    align-items: center; /* Centrar verticalmente */
+    align-items: center; 
 }
 
 .logo {
-    width: 80px; /* Ajustar el tamaño del logo */
-    height: auto; /* Mantener la proporción */
-    margin-right: 20px; /* Espacio entre el logo y la navegación */
+    width: 80px; 
+    height: auto; 
+    margin-right: 20px; 
 }
 
 nav ul {
     list-style-type: none;
     padding: 0;
     display: flex;
-    flex-wrap: wrap; /* Permitir que los elementos se envuelvan en pantallas pequeñas */
+    flex-wrap: wrap; 
 }
 
 nav ul li {
-    margin-right: 20px; /* Espacio entre los elementos del menú */
+    margin-right: 20px; 
 }
 
 nav ul li a {
@@ -55,25 +55,25 @@ footer {
 
 .eventos-navegacion {
    display: flex;
-   align-items: stretch; /* Asegura que los botones se estiren para igualar la altura */
+   align-items: stretch; 
    gap: 10px;
 }
 
 #eventos-container {
    display: flex;
-   justify-content: center; /* Centrar los eventos */
-   flex-grow: 1; /* Permitir que el contenedor crezca */
-   gap: 10px; /* Espacio entre los eventos */
-   transition: opacity 0.3s ease-in-out; /* Transición suave para la opacidad */
+   justify-content: center; 
+   flex-grow: 1; 
+   gap: 10px; 
+   transition: opacity 0.3s ease-in-out; 
 }
 
 .evento-card {
    border: 1px solid #ddd;
    border-radius: 8px;
    padding: 1rem;
-   width: 250px; /* Ancho fijo para las tarjetas de evento */
-   opacity: 1; /* Asegúrate de que la opacidad inicial sea visible */
-   transition: transform 0.07s ease, opacity 0.07s ease; /* Transición para movimiento y opacidad */
+   width: 250px; 
+   opacity: 1; 
+   transition: transform 0.07s ease, opacity 0.07s ease; 
    display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,7 +90,7 @@ footer {
 .qr-code {
     max-width: 100%;
     height: auto;
-    max-height: 150px; /* Ajusta este valor según tus necesidades */
+    max-height: 150px; 
     object-fit: contain;
 }
 
@@ -98,34 +98,33 @@ footer {
    display: flex;
    align-items: center;
    justify-content: center;
-   font-size: 24px; /* Tamaño de fuente del botón */
-   background-color: #f0f0f0; /* Color de fondo del botón */
-   border: none; /* Sin borde */
-   cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
-   padding: 0 20px; /* Espaciado horizontal del botón */
+   font-size: 24px; 
+   background-color: #f0f0f0; 
+   border: none; 
+   cursor: pointer; 
+   padding: 0 20px; 
 }
 
 .boton-navegacion:hover {
-   background-color:#e0e0e0; /* Color de fondo al pasar el ratón por encima */
+   background-color:#e0e0e0; 
 }
 
 #horario-table {
    width: 100%;
-   border-collapse: collapse; /* Colapsar bordes de la tabla */
-   margin-top: 1rem; /* Margen superior para la tabla */
+   border-collapse: collapse; 
+   margin-top: 1rem; 
 }
 
 #horario-table th, #horario-table td {
-   border :1px solid #ddd ; /* Bordes de celda */
-   padding :0.5rem ; /* Espaciado interno en celdas */
-   text-align:center ; /* Alinear texto al centro */
+   border :1px solid #ddd ; 
+   padding :0.5rem ; 
+   text-align:center ; 
 }
 
 #horario-table th {
-   background-color :#f2f2f2 ; /* Color de fondo del encabezado de la tabla */
+   background-color :#f2f2f2 ; 
 }
 
-/* Estilos para formularios de login y registro */
 #login-form, #register-form {
    max-width :400px ;
    margin :2rem auto ;
@@ -175,7 +174,7 @@ background-color:#CC0000 ;
     height: auto;
     margin-bottom: 1rem;
 }
-/* Estilo general del formulario */
+
 .form-container {
     max-width: 600px;
     margin: 0 auto;
@@ -251,7 +250,6 @@ form textarea {
 }
 
 
-/* Media Queries para Responsividad */
 
 @media (max-width: 768px) { 
     .header-content { 

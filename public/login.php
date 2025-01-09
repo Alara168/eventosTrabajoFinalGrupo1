@@ -5,7 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
 require_once 'db_connection.php';
 
-// Establecer el tipo de contenido como JSON
 header('Content-Type: application/json');
 
 ob_clean();

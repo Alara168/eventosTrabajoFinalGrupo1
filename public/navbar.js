@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar').querySelector('ul');
 
-    // Verificar si el usuario está logueado (por ejemplo, comprobando localStorage)
+    // Verificar si el usuario está logueado
     const userLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
     const userType = localStorage.getItem('userType'); // Obtener el tipo de usuario
 
