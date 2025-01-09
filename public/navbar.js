@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const gestionarEventosItem = document.createElement('li');
             gestionarEventosItem.innerHTML = '<a href="profesor_eventos.php">Gestionar Eventos</a>';
             navbar.appendChild(gestionarEventosItem);
+            const crearEventoItem = document.createElement('li');
+            crearEventoItem.innerHTML = '<a href="crear_evento.html">Crear Evento</a>';
+            navbar.appendChild(crearEventoItem);
         } else if (userType === 'estudiante') {
             const crearEventoItem = document.createElement('li');
             crearEventoItem.innerHTML = '<a href="crear_evento.html">Crear Evento</a>';
