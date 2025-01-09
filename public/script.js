@@ -42,7 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p>Lugar: ${evento.lugar}</p>
                 <p>Organizador: ${evento.organizador}</p>
                 <p>Descripción: ${evento.descripcion}</p>
-                <div class="qr-container" id="qr-${i}"></div>
+                <div class="qr-container">
+                    <img src="${evento.qr_base64}" alt="QR Code" class="qr-code">
+                </div>
                 <a href="${evento.registro}" class="detalles-link">Ver detalles</a>
             `;
 

@@ -74,6 +74,24 @@ footer {
    width: 250px; /* Ancho fijo para las tarjetas de evento */
    opacity: 1; /* Asegúrate de que la opacidad inicial sea visible */
    transition: transform 0.07s ease, opacity 0.07s ease; /* Transición para movimiento y opacidad */
+   display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.qr-code {
+    max-width: 100%;
+    height: auto;
+    max-height: 150px; /* Ajusta este valor según tus necesidades */
+    object-fit: contain;
 }
 
 .boton-navegacion {
