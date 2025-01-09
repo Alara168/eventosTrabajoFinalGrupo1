@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-01-2025 a las 21:06:17
+-- Tiempo de generación: 09-01-2025 a las 23:19:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -59,7 +59,9 @@ INSERT INTO `eventos` (`id`, `titulo`, `fecha`, `horaInicio`, `horaFin`, `lugar`
 (20, 'Clase Robótica', '2025-01-12', '10:30:00', '12:30:00', 'Aula C112', 'Bemposta', 'Clase para realizar la prueba del trabajo final', 'https://example.com/robots', 1, 0),
 (21, 'Trabajo webs', '2025-01-10', '08:30:00', '10:30:00', 'Aula C304', 'Ana', 'Presentación trabajo desarrollo webs', 'https://example.com/webs', 1, 0),
 (22, 'Presentación SSII', '2025-01-14', '12:20:00', '14:20:00', 'Laboratorio Veterinaria', 'Escuela STEAM', 'Presentación trabajo Sistemas Inteligentes', 'https://www.example.com/SSII', 1, 0),
-(23, 'a', '2025-01-15', '12:12:00', '12:45:00', 'a', 'a', 'a', 'https://example.com/aa', 1, 0);
+(23, 'a', '2025-01-15', '12:12:00', '12:45:00', 'a', 'a', 'a', 'https://example.com/aa', 1, 0),
+(24, 'b', '2025-01-09', '12:12:00', '13:13:00', 'b', 'b', 'b', 'https://example.com/register-b', 0, 0),
+(25, 'Presentación SSII', '2025-01-11', '16:30:00', '17:30:00', 'clase c304', 'miguel', 'presenracion', 'https://www.example.com/SSII-presentacion', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -112,7 +114,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
